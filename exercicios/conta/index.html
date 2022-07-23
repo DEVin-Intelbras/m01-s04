@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DevInBank</title>
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <header>
+      <h1>DevInBank</h1>
+    </header>
+
+    <main>
+      <form id="form">
+        <div class="formGroup">
+          <label>Conta:</label>
+          <select id="conta" class="field"></select>
+        </div>
+
+        <div class="formGroup">
+          <label>Valor:</label>
+          <input id="valor" class="field" type="number" />
+        </div>
+
+        <div class="formGroup">
+          <label>Operação:</label>
+          <select id="operacao" class="field">
+            <option value="0">(Selecione)</option>
+            <option value="1">Sacar</option>
+            <option value="2">Depositar</option>
+          </select>
+        </div>
+
+        <button id="confirmar" class="button-confirm">Confirmar</button>
+      </form>
+
+      <strong id="mensagem"></strong>
+    </main>
+  </body>
+
+  <script src="./index.js"></script>
+</html>
