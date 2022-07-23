@@ -1,3 +1,6 @@
+/*
+ * VARIÁVEIS GLOBAIS
+ */
 // Cria array de clientes simulando um banco de dados
 let contasClientes = [
   {
@@ -32,11 +35,18 @@ const OPERACAO_CONTA = {
   DEPOSITAR: 2,
 };
 
+// Cria key do localStorage
+const LOCAL_STORAGE_CONTAS_CLIENTES = 'CONTAS_CLIENTES';
+
 // Obtem elementos do html para utilizar no JS
 const selectConta = document.getElementById('conta');
 const strongMensagem = document.getElementById('mensagem');
 const form = document.getElementById('form');
 const body = document.body;
+
+/*
+ * FUNCÕES
+ */
 
 // Função responsável por criar uma opção e retornar ela, essa função recebe como parametro o valor e o texto para criar a opção
 const adicionaOpcao = (value, text) => {
@@ -65,14 +75,33 @@ const populaSelect = () => {
   adicionaOpcao('0', '(Selecione)');
 
   // Cria as opções do select
-  contasClientes.forEach((conta) => {
-    // Adiciona a opção no select
-    adicionaOpcao(conta.id, conta.nome);
-  });
+  contasClientes
+    // Método responsável por ordenar os clientes por nome
+    .sort((a, b) => (a.nome < b.nome ? -1 : a.nome > b.nome ? 1 : 0))
+    .forEach((conta) => {
+      // Adiciona a opção no select
+      adicionaOpcao(conta.id, conta.nome);
+    });
 };
 
-// Adiciona a chamada para a função populaSelectContas ao evento de load do body
-body.onload = populaSelect;
+// Função responsável por salvar as contas no localStorage
+const salvarContas = (array) => {
+  localStorage.setItem(LOCAL_STORAGE_CONTAS_CLIENTES, JSON.stringify(array));
+};
+
+// Função responsável por recuperar as contas no localStorage
+const buscarContas = (array) => {
+  contas = localStorage.getItem(LOCAL_STORAGE_CONTAS_CLIENTES);
+  if (contas) {
+    contasClientes = JSON.parse(contas);
+  }
+};
+
+// Função responsável por obter as contas do localStorage e popular o select de contas
+const onLoadBody = () => {
+  buscarContas();
+  populaSelect();
+};
 
 // Função responsável por exibir mensagens
 const exibirMensagem = (mensagem, type = MESSAGE_TYPE.ERROR) => {
@@ -107,6 +136,9 @@ const atualizaSaldo = (contaAtual, saldo) => {
 
   // Atribuiu a variável contasClientes o array novo array com saldo atualizado
   contasClientes = contasAtualizadas;
+
+  // Chama função para salvar as contas no localStorage
+  salvarContas(contasAtualizadas);
 };
 
 // Função responsável por validar se o valor é valido
@@ -217,6 +249,13 @@ const realizarOperacao = (event) => {
       break;
   }
 };
+
+/*
+ * EVENTOS
+ */
+
+// Adiciona a chamada para a função populaSelectContas ao evento de load do body
+body.onload = onLoadBody;
 
 // Adiciona a chamada para a função realizarOperacao ao evento de onsubmit do form
 form.onsubmit = realizarOperacao;
