@@ -15,22 +15,27 @@
     <main>
       <form id="form">
         <div class="formGroup">
-          <label>Conta:</label>
+          <label for="conta">Conta:</label>
           <select id="conta" class="field"></select>
         </div>
 
         <div class="formGroup">
-          <label>Valor:</label>
+          <label for="valor">Valor:</label>
           <input id="valor" class="field" type="number" />
         </div>
 
         <div class="formGroup">
-          <label>Operação:</label>
+          <label for="operacao">Operação:</label>
           <select id="operacao" class="field">
             <option value="0">(Selecione)</option>
             <option value="1">Sacar</option>
             <option value="2">Depositar</option>
           </select>
+        </div>
+
+        <div class="formGroup">
+          <label for="senha">Senha:</label>
+          <input id="senha" class="field" type="password" />
         </div>
 
         <button id="confirmar" class="button-confirm">Confirmar</button>
